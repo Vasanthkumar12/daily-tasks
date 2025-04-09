@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP VALIDATION</title>
+
+    <style> 
+          /* Remove arrows from number inputs */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+    
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+        .input {
+            height: 40px;
+            width: 40px;
+            font-weight: bold;
+            font-size: 32px;
+            text-align: center;
+        }
+        #btn {
+            margin-top: 20px;
+            padding: 10px;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            font-size: 19px;
+            background-color: blue;
+            border: none;
+            border-radius: 5px;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div>
+            <input class="input" type="number">
+            <input class="input" type="number">
+            <input class="input" type="number">
+            <input class="input" type="number">
+            <input class="input" type="number">
+            <input class="input" type="number" maxlength="1"><br>
+        </div>
+        <input id="btn" type="submit" value="Send OTP">
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('.input')
+        //console.log(inputs)
+
+        window.addEventListener('load', () => {
+            inputs[0].focus()
+        })
+
+        let inputValues = []
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                let value = input.value
+                inputValues.push(value)
+                console.log(value)
+                
+                if(value.length == 1 && index != inputs.length - 1) {
+                    inputs[index+1].focus()
+                }
+                if(index == inputs.length - 1 && value.length == 1) {
+                    input.blur()
+                }
+            })
+
+            input.addEventListener('keydown', (e) => {
+                if(e.key == 'Backspace') {
+                    inputs[index].value = ''
+                    inputValues.pop()
+                    inputs[index-1].focus()
+                }
+            })
+        })
+
+        let btn = document.getElementById('btn')
+        btn.addEventListener('click', () => {
+            alert(`Your OTP ${inputValues.join("")} submitted successfully.`)
+            inputs.forEach((input, index) => {
+                input.value = ''
+            })
+        })
+
+       
+        
+    </script>
+</body>
+</html>
