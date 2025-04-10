@@ -53,7 +53,8 @@ export const Users = () => {
     // update users
     const updateFields = (user) => {
         setUser(user)
-        setIsUpdate(prev => !prev)
+        let flag = isUpdate ? isUpdate : true
+        setIsUpdate(flag)
         console.log(user)
     }
 
@@ -80,7 +81,7 @@ export const Users = () => {
     }
 
    
- const deleteUser = async() => {
+    const deleteUser = async() => {
         try{
             let userEntry =await findUser()
             await axios.delete(`https://states-c4c13-default-rtdb.firebaseio.com/users/${userEntry[0]}.json`)
@@ -91,6 +92,14 @@ export const Users = () => {
             console.log(error)
         }
     }
+
+    const cancel = () => {
+        let data = { firstName: '', lastName: '' }
+        setUser(data)
+        let flag = data.firstName == '' && data.lastName == '' ? false : true
+        setIsUpdate(flag)
+    }
+
   return (
     <div>
         <div>
@@ -125,7 +134,7 @@ export const Users = () => {
             <button style={{padding: '5px'}} onClick={submitForm} disabled={isUpdate}>Create</button>
             <button style={{padding: '5px'}} onClick={updateUser} disabled={!isUpdate}>Update</button>
             <button style={{padding: '5px'}} onClick={deleteUser} disabled={!isUpdate}>Delete</button>
-            <button style={{padding: '5px'}}>Cancel</button>
+            <button style={{padding: '5px'}} onClick={cancel}>Cancel</button>
         </div>
 
     </div>
