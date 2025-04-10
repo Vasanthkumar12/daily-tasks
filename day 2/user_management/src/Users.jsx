@@ -57,11 +57,16 @@ export const Users = () => {
         console.log(user)
     }
 
+    const findUser = async() => {
+        let result = await axios.get('https://states-c4c13-default-rtdb.firebaseio.com/users.json')
+        let userEntry = Object.entries(result.data).find(([key, value]) => value.id == user.id)
+        return userEntry
+    }
+
     const updateUser = async() => {
         
         try {
-            let result = await axios.get('https://states-c4c13-default-rtdb.firebaseio.com/users.json')
-            let userEntry = Object.entries(result.data).find(([key, value]) => value.id == user.id)
+            let userEntry = await findUser()
             console.log(userEntry, 'userEntry')
             console.log(user)
             let upRes = await axios.patch(`https://states-c4c13-default-rtdb.firebaseio.com/users/${userEntry[0]}.json`, user)
@@ -74,6 +79,18 @@ export const Users = () => {
         }
     }
 
+   
+ const deleteUser = async() => {
+        try{
+            let userEntry =await findUser()
+            await axios.delete(`https://states-c4c13-default-rtdb.firebaseio.com/users/${userEntry[0]}.json`)
+            setUser({ firstName: '', lastName: '' })
+            setIsUpdate(!isUpdate)
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
   return (
     <div>
         <div>
@@ -107,7 +124,7 @@ export const Users = () => {
         <div style={{ display: "flex", justifyContent: 'space-around', width: '300px' }}>
             <button style={{padding: '5px'}} onClick={submitForm} disabled={isUpdate}>Create</button>
             <button style={{padding: '5px'}} onClick={updateUser} disabled={!isUpdate}>Update</button>
-            <button style={{padding: '5px'}} disabled={!isUpdate}>Delete</button>
+            <button style={{padding: '5px'}} onClick={deleteUser} disabled={!isUpdate}>Delete</button>
             <button style={{padding: '5px'}}>Cancel</button>
         </div>
 
