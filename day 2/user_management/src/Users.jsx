@@ -6,6 +6,7 @@ export const Users = () => {
     const [users, setUsers] = useState([])
     const [filteredUsers, setFilteredUsers] = useState([])
     const [isUpdate, setIsUpdate] = useState(false)
+    const [isFiltering, setIsFiltering] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -43,9 +44,9 @@ export const Users = () => {
 
 
     const searchUser = (e) => {
-        console.log("youuuu")
+        setIsFiltering(true)
         const value = e.target.value
-        let arr = users.filter((user) => user.firstName.toLowerCase().includes(value.toLowerCase()))
+        let arr = users.filter((user) => user.firstName.toLowerCase().startsWith(value.toLowerCase()))
         console.log(arr)
         setFilteredUsers(arr)
     }
@@ -109,7 +110,7 @@ export const Users = () => {
 
         <div style={{display: 'flex'}}>
             <div style={{border: '1px solid black', padding: '10px', marginBottom: "20px", marginTop: "20px" }}>
-                { filteredUsers.length > 0 ? (filteredUsers.map((user) => (
+                { isFiltering ? (filteredUsers.map((user) => (
                     <p onClick={() => updateFields(user)}>{user.firstName} {user.lastName}</p>
                 ))) : (users.map((user) => (
                     <p onClick={() => updateFields(user)}>{user.firstName} {user.lastName}</p>
