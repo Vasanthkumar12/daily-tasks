@@ -18,16 +18,16 @@ export const SetBudget = () => {
                 <input type="submit" className='border p-2 pl-5 pr-5 text-white bg-blue-600 font-bold rounded-sm' value='Set Budget' />
             </form>
             <div className='mt-5 grid grid-cols-3 gap-4'>
-                <div className='bg-blue-100 p-5 pr-45'>
-                    <h2 className='text-[16px]'>Total Budget</h2>
+                <div className='bg-blue-100 p-5 pr-5'>
+                    <h2 className='text-[16px] text-blue-600'>Total Budget</h2>
                     <h1 className='text-[24px] font-bold'>$0</h1>
                 </div>
-                <div className='bg-green-100 p-5 pr-45'>
-                    <h2 className='text-[16px]'>Total Expense</h2>
+                <div className='bg-green-100 p-5 pr-5'>
+                    <h2 className='text-[16px] text-green-600'>Total Expense</h2>
                     <h1 className='text-[24px] font-bold'>$0</h1>
                 </div>
-                <div className='bg-yellow-100 p-5 pr-45'>
-                    <h2 className='text-[16px]'>Remaining</h2>
+                <div className='bg-yellow-100 p-5 pr-5'>
+                    <h2 className='text-[16px] text-yellow-500'>Remaining</h2>
                     <h1 className='text-[24px] font-bold'>$0</h1>
                 </div>
             </div>
