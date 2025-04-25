@@ -36,3 +36,9 @@ let nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
 console.log(merge(nums1, m, nums2, n))
 
 // Leetcode Link => https://leetcode.com/problems/merge-sorted-array/
+
+// Interview Based
+let a1 = [1, 2, 3, 4]
+let a2 = [...a1]
+a1[0] = 0
+console.log(a1, a2)
