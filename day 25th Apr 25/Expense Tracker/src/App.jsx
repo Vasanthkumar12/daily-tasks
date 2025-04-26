@@ -2,6 +2,7 @@
 // import { Demo } from './Demo'
 import { Navbar } from './common/NavBar'
 import { AddExpense } from './components/Budget/AddExpense'
+import { DisplayExpenses } from './components/Budget/DisplayExpenses'
 import { SetBudget } from './components/Budget/SetBudget'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <SetBudget />
       <AddExpense />
+      <DisplayExpenses />
     </>
   )
 }
