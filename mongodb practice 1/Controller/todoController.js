@@ -1,4 +1,4 @@
-import { todoDetails } from "../Model/todoSchema"
+import { todoDetails } from "../Model/todoSchema.js"
 
 export const postTodo = async (req, res) => {
     try {
@@ -11,3 +11,12 @@ export const postTodo = async (req, res) => {
     }
 }
 
+export const getTodo = async(req, res) => {
+    try {
+        const todoData = await todoDetails.find()
+        res.status(200).json({ todoData })
+    }
+    catch(error) {
+        res.status(500).json({ error: error.message })
+    }
+}
