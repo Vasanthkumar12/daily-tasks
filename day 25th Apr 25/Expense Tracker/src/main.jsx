@@ -1,10 +1,11 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-// import { Provider } from "@/components/ui/provider"
+import { Provider } from 'react-redux'
+import { expensesStore } from './redux/store.js'
 
 createRoot(document.getElementById('root')).render(
-  // <Provider>
+  <Provider store={expensesStore}>
     <App />
-  // </Provider>
+  </Provider>
 )
