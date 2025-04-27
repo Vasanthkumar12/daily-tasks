@@ -5,6 +5,7 @@ import { setTotalBudget } from '../../redux/actions'
 export const SetBudget = () => {
     const dispatch = useDispatch()
     const [budget, setBudget] = useState('')
+    console.log('render SetBudget')
 
     const total_amount = useSelector((expensesStore) => expensesStore.total_budget)
     const remaining_amount = useSelector((expensesStore) => expensesStore.total_budget - expensesStore.total_expense)
