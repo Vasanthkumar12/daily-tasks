@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTotalBudget } from '../../redux/actions'
+import { toast } from 'react-toastify'
 
 export const SetBudget = () => {
     const dispatch = useDispatch()
     const [budget, setBudget] = useState('')
-    console.log('render SetBudget')
 
     const total_amount = useSelector((expensesStore) => expensesStore.total_budget)
     const remaining_amount = useSelector((expensesStore) => expensesStore.total_budget - expensesStore.total_expense)
@@ -15,8 +15,17 @@ export const SetBudget = () => {
     
     const handleSetBudget = (e) => {
         e.preventDefault();
+        if(budget == '') {
+            toast.error("Please enter the Budget")
+            return
+        }
+        if (Number(budget) === 0) {
+            toast.error("Please enter Budget more than 0")
+            return
+        }
         dispatch(setTotalBudget(budget))
-        setBudget(0)
+        setBudget('')
+        toast.success("Budget has set successfully. Now you can add your expenses below.")
     }
   return (
     <div>
