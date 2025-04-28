@@ -2,29 +2,35 @@
 // import { Demo } from './Demo'
 import { ToastContainer } from 'react-toastify'
 import { Navbar } from './common/NavBar'
-import { AddExpense } from './components/Budget/AddExpense'
-import { SetBudget } from './components/Budget/SetBudget'
+import { Route, Routes } from 'react-router-dom'
+import { DashBoard } from './components/DashBoard'
+import { History } from './components/History'
+import { Analytics } from './components/Analytics'
 
 function App() {
 
   return (
     <>
-    <ToastContainer
-      position="top-left"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick={false}
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="colored"
-      limit={3}
-    />
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        limit={3}
+      />
       <Navbar />
-      <SetBudget />
-      <AddExpense />
+
+      <Routes>
+        <Route path='/' element={<DashBoard />} />
+        <Route path='/analytics' element={<Analytics />} />
+        <Route path='/history' element={<History />} />
+      </Routes>
     </>
   )
 }
