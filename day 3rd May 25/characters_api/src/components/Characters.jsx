@@ -4,15 +4,9 @@ export const Characters = () => {
     const [characters, setCharacters] = useState([])
     const [paginatedCharacters, setPaginatedCharacters] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
-    const [pagePerPost,setPagePerPost] = useState(perPage)
 
     let endIndex = currentPage * perPage
     let startIndex = endIndex - perPage
-    const char = characters.slice(startIndex,endIndex)
-
-    // const paginate = pageNumber => currentPage+1
-
-
     let totalPages = Math.ceil(characters.length / 6)
 
     const fetchCharacters = async () => {
