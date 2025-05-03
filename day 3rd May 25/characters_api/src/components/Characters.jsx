@@ -4,18 +4,18 @@ export const Characters = () => {
     const [characters, setCharacters] = useState([])
     const [paginatedCharacters, setPaginatedCharacters] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
-    const [startIndex, setStartIndex] = useState(0)
-    const [endIndex, setEndIndex] = useState(perPage)
+    const [pagePerPost,setPagePerPost] = useState(perPage)
+
+    let endIndex = currentPage * perPage
+    let startIndex = endIndex - perPage
+    const char = characters.slice(startIndex,endIndex)
+
+    // const paginate = pageNumber => currentPage+1
+
 
     let totalPages = Math.ceil(characters.length / 6)
 
     const fetchCharacters = async () => {
-        let newStartIndex = (currentPage - 1) * perPage
-        let newEndIndex = newStartIndex + perPage
-        setStartIndex(newStartIndex)
-        setEndIndex(newEndIndex)
-        console.log(startIndex, endIndex)
-
         try {
             let res = await fetch('https://rickandmortyapi.com/api/character')
             let data = await res.json()
@@ -43,6 +43,9 @@ export const Characters = () => {
                         <li>{char.status}</li>
                     </ol>
                 )) }
+            </div>
+            <div>
+                
             </div>
             <button disabled = {currentPage <= 1? true : false} onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
             <button>{currentPage}</button>
