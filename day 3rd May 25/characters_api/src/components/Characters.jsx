@@ -4,6 +4,8 @@ export const Characters = () => {
     const [characters, setCharacters] = useState([])
     const [paginatedCharacters, setPaginatedCharacters] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [flag, setFlag] = useState(true)
+    const [time, setTime] = useState('')
 
     let endIndex = currentPage * perPage
     let startIndex = endIndex - perPage
@@ -26,24 +28,55 @@ export const Characters = () => {
         fetchCharacters()
     }, [currentPage])
 
+    const showCard = (id) => {
+        console.log(paginatedCharacters)
+        let card = paginatedCharacters.filter((item) => item.id == startIndex + id + 1)
+        console.log(card, 'filtered')
+        setPaginatedCharacters(card)
+        setFlag(false)
+    }
+
     return (
         <>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-                { paginatedCharacters.map((char, index) => (
-                    <ol key={index} style={{listStyleType: 'none'}}>
-                        <li><img src={char.image} alt="cartoon" /></li>
-                        <li>{char.name}</li>
-                        <li>{char.species}</li>
-                        <li>{char.status}</li>
-                    </ol>
-                )) }
-            </div>
-            <div>
-                
-            </div>
-            <button disabled = {currentPage <= 1? true : false} onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
-            <button>{currentPage}</button>
-            <button disabled = {currentPage >= totalPages ? true : false }  onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+            { flag ? (
+                <div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+                        {console.log(paginatedCharacters)}
+                        { paginatedCharacters.map((char, index) => (
+                            <ol key={index} style={{listStyleType: 'none'}}>
+                                <li><img src={char.image} alt="cartoon" /></li>
+                                <li>{char.name}</li>
+                                <li>{char.species}</li>
+                                <li>{char.status}</li>
+                                <button onClick={() => showCard(index)}>Description</button>
+                            </ol>
+                        )) }
+                    </div>
+                    <div>
+                        
+                    </div>
+                    <button disabled = {currentPage <= 1? true : false} onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
+                    <button>{currentPage}</button>
+                    <button disabled = {currentPage >= totalPages ? true : false }  onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                </div>
+            ) : (
+                <div style={{marginLeft: '30%', marginTop: '30%'}}>
+                    { paginatedCharacters.map((char, index) => (
+                            <ol key={index} style={{listStyleType: 'none'}}>
+                                <li><img src={char.image} alt="cartoon" /></li>
+                                <li><strong>name : </strong>{char.name}</li>
+                                <li><strong>species : </strong>{char.species}</li>
+                                <li><strong>status : </strong>{char.status}</li>
+                                <li><strong>type : </strong>{char.type}</li>
+                                <li><strong>gender : </strong>{char.gender}</li>
+                                <li><strong>origin location : </strong>{char.origin.name}</li>
+                                <li><strong>current location : </strong>{char.location.name}</li>
+                                <li><strong>episode appearances : </strong>{char.episode.length}</li>
+                            </ol>
+                        )) 
+                    }
+                </div>
+            )}
         </>
   )
 }
