@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Time } from './Time'
 export const Characters = () => {
     const perPage = 6
     const [characters, setCharacters] = useState([])
@@ -77,6 +78,7 @@ export const Characters = () => {
                     }
                 </div>
             )}
+            <Time />
         </>
   )
 }
