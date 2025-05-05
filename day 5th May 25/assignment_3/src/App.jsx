@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Greeting } from './Greeting'
+import { UserProfile } from './components/UserProfile'
 
 function App() {
   const [name, setName] = useState('')
@@ -35,6 +36,7 @@ function App() {
         <h1></h1>
       ) }
 
+      <UserProfile  name = {name} />
     </>
   )
 }
