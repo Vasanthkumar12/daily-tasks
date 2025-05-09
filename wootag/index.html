@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #video-id {
+            width: 500px;
+            height: 300px;
+            position: absolute;
+            top: 480px;
+            left: 0px;
+        }
+        #container_1 {
+            position: relative;
+            width: 500px;
+            height: 600px;  
+        }
+        #container_1 img {
+            width: 500px;
+        }
+
+        #container_2 {
+            font-family: sans-serif;
+            color: red; 
+            width: 400px;
+            height: 800px;
+            position: relative;
+        }
+        #container_2 h1 {
+            padding-left: 30px;
+            padding-right: 60px;
+            font-size: 30px;
+            width: 100%;
+        }
+        #stage {
+            height: 450px;
+            width: 300px;
+            padding-left: 40px;
+            padding-top: 20px;
+        }
+        #people {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 420px;
+            width: 400px;
+        }
+        #background {
+            position: absolute;
+            bottom: 0;
+            top: -500px;
+        }
+        #container_2 h2 {
+            position: absolute;
+            text-align: center;
+            font-size: 22px;
+            color: white;
+            background-color: red;
+            padding: 15px 5px;
+            margin: 15px 15px 30px 15px;
+            border-radius: 10px;
+        }
+
+        #container_3 {
+            height: 800px;
+            width: 400px;
+            text-align: center;
+            background-image: url('./map.png');
+            position: relative;
+        }
+        #container_3 div {
+            background-color: aliceblue;
+            opacity: 0.8;
+            padding: 15px 5px 5px 5px;
+        }
+        #upper_quote {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+        #bottom_quote {
+            position: absolute;
+            bottom: 0;
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            margin: 0;
+            padding: 10px 0px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #container_3 > div > p {
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container_1">
+        <img src="final.png" alt="">
+        <video src="ulajh.mp4" controls id="video-id"  autoplay muted playsinline></video>
+    </div>
+
+    <div id="container_2">
+        <h1>WE ARE IN THE MIDDLE OF CONSPIRACY</h1>
+        <img src="stage.png" alt="stage" id="stage">
+        <img src="people.png" alt="people" id="people">
+        <h2>
+            FIND THE MASTERMIND BEHIND THE RACING CONSPIRACY AND REVEAL THE SECRET <span>NOW</span>
+        </h2>
+    </div>
+
+    <div id="container_3">
+        <div>
+            <h1>FIND THE TARGET:</h1>
+            <P>The guy us eating penne pollo pesto with his bodyguard at cafe in the morning.</P>
+    
+            <p id="upper_quote">
+                <i>Guess in which country he is now</i>
+            </p>
+    
+            <p id="bottom_quote">
+                <i>Drag the map to select the country pinpoint</i>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const containers = [
+          document.getElementById("container_1"),
+          document.getElementById("container_2"),
+          document.getElementById("container_3")
+        ];
+      
+        let currentIndex = 0;
+      
+        // Initially show only the first container
+        containers.forEach((el, i) => {
+          el.style.display = i === 0 ? "block" : "none";
+        });
+      
+        setInterval(() => {
+          // Hide current
+          containers[currentIndex].style.display = "none";
+      
+          // Move to next index (loop back if needed)
+          currentIndex = (currentIndex + 1) % containers.length;
+      
+          // Show next
+          containers[currentIndex].style.display = "block";
+        }, 9000);
+      </script>
+      
+</body>
+
+</html>
