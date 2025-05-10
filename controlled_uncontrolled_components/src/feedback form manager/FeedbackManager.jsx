@@ -45,6 +45,10 @@ export const FeedbackManager = () => {
             <input type="submit" />
         </form>
 
+        { filteredFeedbacks.length === 0 ? <h1>No Feedback Yet</h1> : (<h1></h1>)}
+
+        { filteredFeedbacks.length >= 10 ? <p>Too many results, please refine your search</p> : (<h1></h1>)}
+        
         { feedbacks.length > 0 && (
             <div>
                 <input 
