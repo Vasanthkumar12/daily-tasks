@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 
 export const FeedbackManager = () => {
     const [name, setName] = useState('')
     const [feedback, setFeedback] = useState('')
     const [feedbacks, setFeedbacks] = useState([])
-    const [filteredFbs, setFilteredFbs] = useState([])
+    const [search, setSearch] = useState('')
     const [showFiltered, setShowFiltered] = useState(false)
     const ratingRef = useRef(null)
 
@@ -12,8 +12,8 @@ export const FeedbackManager = () => {
         e.preventDefault()
         const rating = ratingRef.current.value
 
-        if(feedback == '' || name == '' || rating == '') {
-            alert('feedback and name should not be empty.')
+        if(feedback === '' || name === '' || rating === '') {
+            alert('Feedback and name should not be empty.')
             return
         }
         
@@ -24,51 +24,63 @@ export const FeedbackManager = () => {
         ratingRef.current.value = null
     }
 
+    // Memoized filtered feedback list based on search term
+    const filteredFeedbacks = useMemo(() => {
+        return feedbacks.filter((fb) => 
+            fb.name.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [search, feedbacks]); // Recompute only if search or feedbacks change
+
     const handleChange = (e) => {
-        let searchWord = e.target.value.trim()
-        searchWord = searchWord.toLowerCase()
-        if(searchWord.length > 0) {
-            setShowFiltered(true)
-        }
-        let res = feedbacks.filter((fb) => fb.name.toLowerCase().includes(searchWord))
-        setFilteredFbs(res)
+        setShowFiltered(true)
+        setSearch(e.target.value.trim()) // Update the search term
     }
 
   return (
     <div>
         <form onSubmit={handleSubmit} style={{border: '1px solid', padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px auto', maxWidth: '300px'}}>
-            <input type="text" name ='name' value={name} onChange={(e) => setName(e.target.value)} style={{marginBottom: '10px'}} placeholder='Enter your name' /><br />
-
-            <textarea name="feedback" style={{marginBottom: '10px'}} placeholder='Enter your feedback' id="feedback" value={feedback} onChange={(e) => setFeedback(e.target.value)} ></textarea><br />
-           
-            <input type="text" ref={ratingRef} style={{marginBottom: '10px'}} placeholder='Enter your rating' /><br />
-
+            <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} style={{marginBottom: '10px'}} placeholder="Enter your name" />
+            <textarea name="feedback" value={feedback} onChange={(e) => setFeedback(e.target.value)} style={{marginBottom: '10px'}} placeholder="Enter your feedback" />
+            <input type="text" ref={ratingRef} style={{marginBottom: '10px'}} placeholder="Enter your rating" />
             <input type="submit" />
         </form>
 
-        { feedbacks.length > 0 && <div>
-            <input type='search' placeholder='Search by feedback name' onChange={handleChange} />
-            </div>}
-        
-        { filteredFbs.length == 0 && !showFiltered && feedbacks.map((fb) => (
-            <div style={{border: '1px solid black', display: 'inline-block', margin: '10px', padding: '5px'}}>
-                <p>Name : {fb.name}</p>
-                <p>Feedback :  {fb.feedback}</p>
-                <p>Rating : {fb.rating}</p>
-                <p>Timestamp : {fb.timestamp}</p>
+        { feedbacks.length > 0 && (
+            <div>
+                <input 
+                    type="search" 
+                    placeholder="Search by feedback name" 
+                    value={search} 
+                    onChange={handleChange} 
+                />
             </div>
+        )}
 
-        ))}
-
-        { filteredFbs.length > 0 && filteredFbs.map((fb) => (
-            <div style={{border: '1px solid black', display: 'inline-block', margin: '10px', padding: '5px'}}>
-                <p>Name : {fb.name}</p>
-                <p>Feedback :  {fb.feedback}</p>
-                <p>Rating : {fb.rating}</p>
-                <p>Timestamp : {fb.timestamp}</p>
+        { filteredFeedbacks.length === 0 && !showFiltered && feedbacks.length > 0 && (
+            <div>
+                {feedbacks.map((fb, idx) => (
+                    <div key={idx} style={{border: '1px solid black', display: 'inline-block', margin: '10px', padding: '5px'}}>
+                        <p>Name: {fb.name}</p>
+                        <p>Feedback: {fb.feedback}</p>
+                        <p>Rating: {fb.rating}</p>
+                        <p>Timestamp: {new Date(fb.timestamp).toLocaleString()}</p>
+                    </div>
+                ))}
             </div>
+        )}
 
-        ))}
+        { filteredFeedbacks.length > 0 && (
+            <div>
+                {filteredFeedbacks.map((fb, idx) => (
+                    <div key={idx} style={{border: '1px solid black', display: 'inline-block', margin: '10px', padding: '5px'}}>
+                        <p>Name: {fb.name}</p>
+                        <p>Feedback: {fb.feedback}</p>
+                        <p>Rating: {fb.rating}</p>
+                        <p>Timestamp: {new Date(fb.timestamp).toLocaleString()}</p>
+                    </div>
+                ))}
+            </div>
+        )}
     </div>
   )
 }
