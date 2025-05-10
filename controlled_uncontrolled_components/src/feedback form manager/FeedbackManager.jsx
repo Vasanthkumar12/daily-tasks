@@ -4,7 +4,8 @@ export const FeedbackManager = () => {
     const [name, setName] = useState('')
     const [feedback, setFeedback] = useState('')
     const [feedbacks, setFeedbacks] = useState([])
-    const [search, setSearch] = useState('')
+    const [filteredFbs, setFilteredFbs] = useState([])
+    const [showFiltered, setShowFiltered] = useState(false)
     const ratingRef = useRef(null)
 
     const handleSubmit = (e) => {
@@ -23,6 +24,15 @@ export const FeedbackManager = () => {
         ratingRef.current.value = null
     }
 
+    const handleChange = (e) => {
+        let searchWord = e.target.value.trim()
+        if(searchWord.length > 0) {
+            setShowFiltered(true)
+        }
+        let res = feedbacks.filter((fb) => fb.name.includes(searchWord))
+        setFilteredFbs(res)
+    }
+
   return (
     <div>
         <form onSubmit={handleSubmit} style={{border: '1px solid', padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px auto', maxWidth: '300px'}}>
@@ -34,8 +44,22 @@ export const FeedbackManager = () => {
 
             <input type="submit" />
         </form>
+
+        { feedbacks.length > 0 && <div>
+            <input type='search' placeholder='Search by feedback name' onChange={handleChange} />
+            </div>}
         
-        { feedbacks.map((fb) => (
+        { filteredFbs.length == 0 && !showFiltered && feedbacks.map((fb) => (
+            <div style={{border: '1px solid black', display: 'inline-block', margin: '10px', padding: '5px'}}>
+                <p>Name : {fb.name}</p>
+                <p>Feedback :  {fb.feedback}</p>
+                <p>Rating : {fb.rating}</p>
+                <p>Timestamp : {fb.timestamp}</p>
+            </div>
+
+        ))}
+
+        { filteredFbs.length > 0 && filteredFbs.map((fb) => (
             <div style={{border: '1px solid black', display: 'inline-block', margin: '10px', padding: '5px'}}>
                 <p>Name : {fb.name}</p>
                 <p>Feedback :  {fb.feedback}</p>
