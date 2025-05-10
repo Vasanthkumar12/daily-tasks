@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo, useEffect } from 'react'
 
 export const FeedbackManager = () => {
     const [name, setName] = useState('')
@@ -39,6 +39,16 @@ export const FeedbackManager = () => {
     const handleClick = () => {
         setFeedbacks([])
     }
+
+    useEffect(() => {
+        if(feedbacks.length == 0) return
+
+        let fdbk = feedbacks[feedbacks.length - 1]
+        console.log(`${fdbk.name} added a feedback at ${new Date().toLocaleTimeString()}`)
+
+        return () => console.log("Cleanup function called...")
+
+    }, [feedbacks])
 
   return (
     <div>
