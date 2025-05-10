@@ -26,10 +26,11 @@ export const FeedbackManager = () => {
 
     const handleChange = (e) => {
         let searchWord = e.target.value.trim()
+        searchWord = searchWord.toLowerCase()
         if(searchWord.length > 0) {
             setShowFiltered(true)
         }
-        let res = feedbacks.filter((fb) => fb.name.includes(searchWord))
+        let res = feedbacks.filter((fb) => fb.name.toLowerCase().includes(searchWord))
         setFilteredFbs(res)
     }
 
