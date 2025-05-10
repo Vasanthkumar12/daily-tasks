@@ -36,6 +36,10 @@ export const FeedbackManager = () => {
         setSearch(e.target.value.trim()) // Update the search term
     }
 
+    const handleClick = () => {
+        setFeedbacks([])
+    }
+
   return (
     <div>
         <form onSubmit={handleSubmit} style={{border: '1px solid', padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px auto', maxWidth: '300px'}}>
@@ -48,7 +52,7 @@ export const FeedbackManager = () => {
         { filteredFeedbacks.length === 0 ? <h1>No Feedback Yet</h1> : (<h1></h1>)}
 
         { filteredFeedbacks.length >= 10 ? <p>Too many results, please refine your search</p> : (<h1></h1>)}
-        
+
         { feedbacks.length > 0 && (
             <div>
                 <input 
@@ -57,6 +61,7 @@ export const FeedbackManager = () => {
                     value={search} 
                     onChange={handleChange} 
                 />
+                <button onClick={handleClick}>Clear all</button>
             </div>
         )}
 
