@@ -5,6 +5,7 @@ export const FeedbackManager = () => {
     const [feedback, setFeedback] = useState('')
     const [feedbacks, setFeedbacks] = useState([])
     const [search, setSearch] = useState('')
+    const [filterObj, setFilterObj] = useState({ select_rating: '' })  
     const [showFiltered, setShowFiltered] = useState(false)
     const ratingRef = useRef(null)
 
@@ -50,6 +51,26 @@ export const FeedbackManager = () => {
 
     }, [feedbacks])
 
+    // Filters
+    const updateFilters = (e) => {
+        const { name, value } = e.target
+        setFilterObj({ ...filterObj, [name]: value })
+    }
+    const applyFilters = () => {
+        for(let key in filterObj) {
+            let val = filterObj[key]
+            // console.log(key, val)
+            switch (val) {
+                case "4 - 5":
+                    console.log("yes 4 - 5")
+                    break
+                default:
+                    console
+            }
+            let res = feedbacks.filter((fb) => fb.rating )
+        }
+    }
+
   return (
     <div>
         <form onSubmit={handleSubmit} style={{border: '1px solid', padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px auto', maxWidth: '300px'}}>
@@ -71,7 +92,14 @@ export const FeedbackManager = () => {
                     value={search} 
                     onChange={handleChange} 
                 />
-                <button onClick={handleClick}>Clear all</button>
+                <select name="select_rating" id="" onChange={updateFilters}>
+                    <option value="">rating</option>
+                    <option value="4-5">4 to 5</option>
+                    <option value="3-4">3 to 4</option>
+                    <option value="2-3">2 to 3</option>
+                    <option value="1-2">1 to 2</option>
+                </select>
+                <button onClick={applyFilters}>Apply</button>
             </div>
         )}
 
@@ -100,6 +128,8 @@ export const FeedbackManager = () => {
                 ))}
             </div>
         )}
+
+        { filteredFeedbacks.length > 0 && (<button onClick={handleClick}>Clear all</button>) }
     </div>
   )
 }
